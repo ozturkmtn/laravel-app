@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+//Route::get('/hello',[\App\Http\Controllers\HelloController::class,'index']);
+//Route::get('/mello', [\App\Http\Controllers\HelloController::class, 'mello'])->name('mello');
+
+//Route::prefix('hello')->group(function () {
+//    Route::get('/mello',[\App\Http\Controllers\HelloController::class,'mello']);
+//});
+
+//http://localhost/mello
+Route::controller(\App\Http\Controllers\HelloController::class)->prefix('hello')->group(function () {
+    Route::get('/foo', 'foo')->name('foo');
+    Route::get('/mello', 'mello')->name('mello');
+    Route::get('/boo', 'boo')->name('boo')->middleware('auth');
+});
+
+//Route::controller(\App\Http\Controllers\LoginController::class)->get('/login','login');
+Route::get('login', [\App\Http\Controllers\LoginController::class,'login'])->name('login');
